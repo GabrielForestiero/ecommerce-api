@@ -1,15 +1,17 @@
 import express from "express";
+import { auth } from "../middlewares/auth.js";       // 👈 ESTE
+import { authRequired } from "../middlewares/authRequired.js";
 import {
   createOrder,
- 
+  getMyOrders
 } from "../controllers/orders.controller.js";
 
 const router = express.Router();
 
-// flujo normal
-router.post("/", createOrder);
+// 👇 auth opcional: guest o user
+router.post("/", auth, createOrder);
 
-// flujo Mercado Pago
-// router.post("/from-mp", createOrderFromMP);
+// 👇 solo usuarios
+router.get("/my", authRequired, getMyOrders);
 
 export default router;

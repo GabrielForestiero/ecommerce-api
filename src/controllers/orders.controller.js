@@ -55,3 +55,27 @@ export async function createOrder(req, res) {
     return res.status(500).json({ error: "Error creating order" });
   }
 }
+
+
+
+
+export async function getMyOrders(req, res) {
+  // requiere auth
+  if (!req.user) {
+    return res.status(401).json({ error: "Not authenticated" });
+  }
+
+  const orders = await prisma.order.findMany({
+    where: { userId: req.user.id },
+    orderBy: { createdAt: "desc" },
+    include: {
+      items: {
+        include: {
+          product: true,
+        },
+      },
+    },
+  });
+
+  res.json(orders);
+}
