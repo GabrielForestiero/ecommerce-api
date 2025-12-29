@@ -9,6 +9,9 @@ export async function createOrder(req, res) {
       return res.status(400).json({ error: "Empty order" });
     }
 
+    // 👇 NUEVO: usuario si está logueado
+    const userId = req.user?.id ?? null;
+
     const products = await prisma.product.findMany({
       where: {
         id: { in: items.map((i) => i.productId) },
@@ -38,6 +41,7 @@ export async function createOrder(req, res) {
       data: {
         total,
         status: "PENDING",
+        userId, // 👈 ACÁ se asocia o queda null
         items: {
           create: orderItems,
         },

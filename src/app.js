@@ -3,6 +3,7 @@ import cors from "cors";
 import productsRoutes from "./routes/products.routes.js";
 import ordersRoutes from "./routes/orders.routes.js";
 import mercadopagoRoutes from "./routes/mercadopago.routes.js";
+import authRoutes from "./routes/auth.routes.js";
 
 export default function createApp(prisma) {
   const app = express();
@@ -26,6 +27,7 @@ export default function createApp(prisma) {
   app.use("/products", productsRoutes);
   app.use("/orders", ordersRoutes);
   app.use("/api/mercadopago", mercadopagoRoutes);
+  app.use("/auth", authRoutes);
 
   return app;
 }
