@@ -8,7 +8,7 @@ import authRoutes from "./routes/auth.routes.js";
 export default function createApp(prisma) {
   const app = express();
 
-  // 👇 CORS VA ACÁ
+  
   app.use(
     cors({
       origin: process.env.CORS_ORIGIN || "http://localhost:3001",
@@ -18,7 +18,7 @@ export default function createApp(prisma) {
 
   app.use(express.json());
 
-  // 👇 Inyectamos prisma en la request
+ 
   app.use((req, _, next) => {
     req.prisma = prisma;
     next();
